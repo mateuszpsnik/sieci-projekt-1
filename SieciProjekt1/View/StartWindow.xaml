@@ -24,7 +24,7 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="loadFileButton" Command="{Binding Command}">Upload a file</Button>
+        <Button x:Name="loadFileButton" Command="{Binding LoadFileCommand}">Upload a file</Button>
         <TextBlock Grid.Row="1">Size of the file</TextBlock>
         <TextBlock Grid.Row="2" Text="{Binding FileSize}" />
         <Button x:Name="saveFileButton" Grid.Column="1">Save the file</Button>

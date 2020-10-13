@@ -55,18 +55,33 @@ namespace SieciProjekt1.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        private ICommand command;
-        public ICommand Command
+        private ICommand loadFileCommand;
+        public ICommand LoadFileCommand
         {
             get
             {
-                if (command == null)
-                    command = new LoadFileCommand(this);
-                return command;
+                if (loadFileCommand == null)
+                    loadFileCommand = new LoadFileCommand(this);
+                return loadFileCommand;
             }
             set
             {
-                command = value;
+                loadFileCommand = value;
+            }
+        }
+
+        private ICommand saveFileCommand;
+        public ICommand SaveFileCommand
+        {
+            get
+            {
+                if (saveFileCommand == null)
+                    saveFileCommand = new SaveFileCommand(this);
+                return saveFileCommand;
+            }
+            set
+            {
+                saveFileCommand = value;
             }
         }
     }
