@@ -8,6 +8,11 @@ namespace SieciProjekt1.Model
     {
         Header header;
 
-        byte[] bytes;
+        public byte[] Bytes { get; set; }
+
+        public Packet(int size)
+        {
+            Bytes = new byte[size];
+        }
     }
 }

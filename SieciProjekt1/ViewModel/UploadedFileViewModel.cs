@@ -15,6 +15,9 @@ namespace SieciProjekt1.ViewModel
 {
     public class UploadedFileViewModel : INotifyPropertyChanged
     {
+        UploadedFile uploadedFile;
+
+        public string FilePath { get; private set; }
 
         long fileSize;
         public long FileSize
@@ -34,8 +37,13 @@ namespace SieciProjekt1.ViewModel
 
             if (dialog.ShowDialog() == true)
             {
-                FileInfo fileInfo = new FileInfo(dialog.FileName);
+                FilePath = dialog.FileName;
+                FileInfo fileInfo = new FileInfo(FilePath);
                 FileSize = fileInfo.Length;
+
+                uploadedFile = new UploadedFile();
+                uploadedFile.Data = File.ReadAllBytes(FilePath);
+                uploadedFile.DivideDataIntoPackets(10); // it will be able to change packetSize later
             }
             
         }
