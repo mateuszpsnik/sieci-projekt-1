@@ -6,6 +6,7 @@ namespace SieciProjekt1.Model
 {
     public struct Header
     {
-
+        int id;
+        int size;
     }
 }

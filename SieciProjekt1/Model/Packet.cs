@@ -6,6 +6,8 @@ namespace SieciProjekt1.Model
 {
     public class Packet
     {
+        Header header;
 
+        byte[] bytes;
     }
 }
