@@ -25,9 +25,10 @@
         </Grid.ColumnDefinitions>
 
         <Button x:Name="loadFileButton" Command="{Binding LoadFileCommand}">Upload a file</Button>
+        <Button x:Name="saveFileButton" Command="{Binding SaveFileCommand}" Grid.Column="1">
+            Save the file</Button>
         <TextBlock Grid.Row="1">Size of the file</TextBlock>
         <TextBlock Grid.Row="2" Text="{Binding FileSize}" />
-        <Button x:Name="saveFileButton" Grid.Column="1">Save the file</Button>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2" Orientation="Horizontal">
         </StackPanel>
     </Grid>

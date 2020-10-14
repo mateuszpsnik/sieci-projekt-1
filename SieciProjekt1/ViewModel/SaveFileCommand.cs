@@ -1,5 +1,8 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using SieciProjekt1.Model;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 using System.Windows.Input;
 
@@ -23,7 +26,17 @@ namespace SieciProjekt1.ViewModel
 
         public void Execute(object parameter)
         {
-            throw new NotImplementedException();
+            Model.FileToBeSaved fileToBeSaved = viewModel.SendFileToSave();
+
+            fileToBeSaved.ConcatenatePackets();
+
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.InitialDirectory = viewModel.FilePath;
+
+            if (dialog.ShowDialog() == true)
+            {
+                File.WriteAllBytes(dialog.FileName, fileToBeSaved.ConcatenatedPackets);
+            }
         }
     }
 }

@@ -48,6 +48,13 @@ namespace SieciProjekt1.ViewModel
             
         }
 
+        public FileToBeSaved SendFileToSave()
+        {
+            FileToBeSaved fileToBeSaved = new FileToBeSaved(uploadedFile.Packets, (uint)fileSize);
+
+            return fileToBeSaved;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         protected void OnPropertyChanged(string propertyName)

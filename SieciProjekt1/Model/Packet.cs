@@ -4,15 +4,16 @@ using System.Text;
 
 namespace SieciProjekt1.Model
 {
-    public class Packet
+    public struct Packet
     {
         Header header;
 
         public byte[] Bytes { get; set; }
 
-        public Packet(int size)
+        public Packet(uint size, uint id)
         {
             Bytes = new byte[size];
+            header = new Header(id, size);
         }
     }
 }
