@@ -6,14 +6,14 @@ namespace SieciProjekt1.Model
 {
     public struct Packet
     {
-        Header header;
+        public Header Header;
 
         public byte[] Bytes { get; set; }
 
-        public Packet(uint size, uint id)
+        public Packet(int size, int id)
         {
             Bytes = new byte[size];
-            header = new Header(id, size);
+            Header = new Header(id, size);
         }
     }
 }

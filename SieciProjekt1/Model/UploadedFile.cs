@@ -12,14 +12,14 @@ namespace SieciProjekt1.Model
 
         public List<Packet> Packets => packets;
 
-        public void DivideDataIntoPackets(uint packetSize)
+        public void DivideDataIntoPackets(int packetSize)
         {
             packets = new List<Packet>();
-            uint elementsLeft;
+            int elementsLeft;
 
-            for (uint i = 0; i < (uint)Data.LongLength; i++)
+            for (int i = 0; i < Data.Length; i++)
             {
-                elementsLeft = (uint)Data.LongLength - i;
+                elementsLeft = Data.Length - i;
 
                 Packet packet;
 
@@ -28,7 +28,7 @@ namespace SieciProjekt1.Model
                 else
                     packet = new Packet(elementsLeft, i); 
 
-                for (int j = 0; j < packetSize && i < (uint)Data.LongLength; j++)
+                for (int j = 0; j < packetSize && i < Data.Length; j++)
                 {
                     packet.Bytes[j] = Data[i];
                     i++;

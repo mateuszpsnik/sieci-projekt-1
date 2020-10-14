@@ -6,13 +6,13 @@ namespace SieciProjekt1.Model
 {
     public struct Header
     {
-        public Header(uint id, uint size)
+        public Header(int id, int size)
         {
-            this.id = id;
-            this.size = size;
+            ID = id;
+            Size = size;
         }
 
-        uint id;
-        uint size;
+        public int ID;
+        public int Size;
     }
 }

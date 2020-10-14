@@ -50,7 +50,9 @@ namespace SieciProjekt1.ViewModel
 
         public FileToBeSaved SendFileToSave()
         {
-            FileToBeSaved fileToBeSaved = new FileToBeSaved(uploadedFile.Packets, (uint)fileSize);
+            FileToBeSaved fileToBeSaved = new FileToBeSaved(uploadedFile.Packets);
+
+            //FileToBeSaved fileToBeSaved = new FileToBeSaved(uploadedFile.Packets, fileSize);
 
             return fileToBeSaved;
         }
