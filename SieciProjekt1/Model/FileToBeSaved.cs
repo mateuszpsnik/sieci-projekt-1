@@ -13,27 +13,9 @@ namespace SieciProjekt1.Model
             ConcatenatedPackets = new byte[0];
         }
 
-
         List<Packet> packets;
 
         public byte[] ConcatenatedPackets;
-
-        /*
-        public void ConcatenatePackets()
-        {
-            foreach (var packet in packets)
-            {
-                int previousLength = ConcatenatedPackets.Length;
-                byte[] previousConcatenatedPackets = ConcatenatedPackets;
-
-                ConcatenatedPackets = new byte[previousLength + packet.Bytes.Length];
-
-                previousConcatenatedPackets.CopyTo(ConcatenatedPackets, 0);
-                packet.Bytes.CopyTo(ConcatenatedPackets, previousLength);
-            }
-        }
-         */
-
 
         public void ConcatenatePackets(long fileSize)
         {
