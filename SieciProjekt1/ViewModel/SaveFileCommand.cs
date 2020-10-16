@@ -28,7 +28,7 @@ namespace SieciProjekt1.ViewModel
         {
             Model.FileToBeSaved fileToBeSaved = viewModel.SendFileToSave();
 
-            fileToBeSaved.ConcatenatePackets();
+            fileToBeSaved.ConcatenatePackets(viewModel.FileSize);
 
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.InitialDirectory = viewModel.FilePath;

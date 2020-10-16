@@ -16,8 +16,9 @@ namespace SieciProjekt1.Model
         {
             packets = new List<Packet>();
             int elementsLeft;
+            int i = 0;
 
-            for (int i = 0; i < Data.Length; i++)
+            while (i < Data.Length)
             {
                 elementsLeft = Data.Length - i;
 
