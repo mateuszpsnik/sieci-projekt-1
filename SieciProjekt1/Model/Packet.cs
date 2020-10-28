@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SieciProjekt1.Model
 {
-    public struct Packet
+    public class Packet
     {
         public Header Header;
 
