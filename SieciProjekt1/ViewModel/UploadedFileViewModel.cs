@@ -30,6 +30,50 @@ namespace SieciProjekt1.ViewModel
             }
         }
 
+        ChecksumTypes checksumType;
+        public ChecksumTypes ChecksumType
+        {
+            get => checksumType;
+            set
+            {
+                checksumType = value;
+                OnPropertyChanged(nameof(ChecksumType));
+            }
+        }
+
+        int modulusCRCSize;
+        public int ModulusCRCSize
+        {
+            get => modulusCRCSize;
+            set
+            {
+                modulusCRCSize = value;
+                OnPropertyChanged(nameof(ModulusCRCSize));
+            }
+        }
+
+        bool addErrors;
+        public bool AddErrors
+        {
+            get => addErrors;
+            set
+            {
+                addErrors = value;
+                OnPropertyChanged(nameof(AddErrors));
+            }
+        }
+
+        bool withoutRepeats;
+        public bool WithoutRepeats
+        {
+            get => withoutRepeats;
+            set
+            {
+                withoutRepeats = value;
+                OnPropertyChanged(nameof(WithoutRepeats));
+            }
+        }
+
         public void OpenFile()
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -43,16 +87,42 @@ namespace SieciProjekt1.ViewModel
 
                 uploadedFile = new UploadedFile();
                 uploadedFile.Data = File.ReadAllBytes(FilePath);
-                uploadedFile.DivideDataIntoPackets(10); // it will be able to change packetSize later
             }
-            
+        }
+
+        /*
+         Generate errors (if selected),
+         calculate the checksum and divide into packets.
+         */
+        public void ErrorsChecksumPackets()
+        {
+            // errors
+            if (addErrors)
+                uploadedFile.AddErrors(withoutRepeats);
+            // checksum
+            uploadedFile.CalculateChecksum(checksumType, modulusCRCSize);
+            // packets
+            uploadedFile.DivideDataIntoPackets(10); // it will be able to change packetSize later
+        }
+
+        public void SaveFile()
+        {
+            FileToBeSaved fileToBeSaved = SendFileToSave();
+
+            fileToBeSaved.ConcatenatePackets(FileSize);
+
+            SaveFileDialog dialog = new SaveFileDialog();
+            dialog.InitialDirectory = FilePath;
+
+            if (dialog.ShowDialog() == true)
+            {
+                File.WriteAllBytes(dialog.FileName, fileToBeSaved.FinalFile);
+            }
         }
 
         public FileToBeSaved SendFileToSave()
         {
-            FileToBeSaved fileToBeSaved = new FileToBeSaved(uploadedFile.Packets);
-
-            //FileToBeSaved fileToBeSaved = new FileToBeSaved(uploadedFile.Packets, fileSize);
+            FileToBeSaved fileToBeSaved = new FileToBeSaved(uploadedFile.Packets, uploadedFile.Checksum);
 
             return fileToBeSaved;
         }
@@ -91,6 +161,21 @@ namespace SieciProjekt1.ViewModel
             set
             {
                 saveFileCommand = value;
+            }
+        }
+
+        private ICommand startCommand;
+        public ICommand StartCommand
+        {
+            get
+            {
+                if (startCommand == null)
+                    startCommand = new StartCommand(this);
+                return startCommand;
+            }
+            set
+            {
+                startCommand = value;
             }
         }
     }

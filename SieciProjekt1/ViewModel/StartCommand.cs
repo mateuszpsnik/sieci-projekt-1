@@ -1,21 +1,18 @@
-﻿using Microsoft.Win32;
-using SieciProjekt1.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Text;
 using System.Windows.Input;
 
 namespace SieciProjekt1.ViewModel
 {
-    class SaveFileCommand : ICommand
+    class StartCommand : ICommand
     {
         UploadedFileViewModel viewModel;
-        public SaveFileCommand(UploadedFileViewModel viewModel)
+
+        public StartCommand(UploadedFileViewModel viewModel)
         {
             this.viewModel = viewModel;
         }
-
 
         public event EventHandler CanExecuteChanged;
 
@@ -26,7 +23,7 @@ namespace SieciProjekt1.ViewModel
 
         public void Execute(object parameter)
         {
-            viewModel.SaveFile();
+            viewModel.ErrorsChecksumPackets();
         }
     }
 }

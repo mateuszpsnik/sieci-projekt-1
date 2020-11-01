@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SieciProjekt1.View"
         xmlns:viewmodel="clr-namespace:SieciProjekt1.ViewModel"
         mc:Ignorable="d"
-        Title="StartWindow" Height="450" Width="800">
+        Title="StartWindow" Height="250" Width="450">
 
     <Window.Resources>
         <viewmodel:UploadedFileViewModel x:Key="uploadedFileViewModel" />
@@ -14,18 +14,35 @@
     
     <Grid DataContext="{StaticResource ResourceKey=uploadedFileViewModel}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="3*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Button x:Name="loadFileButton" Command="{Binding LoadFileCommand}">Upload a file</Button>
-        <Button x:Name="saveFileButton" Command="{Binding SaveFileCommand}" Grid.Column="1">
-            Save the file</Button>
+        <Button x:Name="loadFileButton" Command="{Binding LoadFileCommand}" Click="loadFileButton_Click">Wczytaj plik</Button>
+        <Button x:Name="saveFileButton" Command="{Binding SaveFileCommand}" Grid.Column="1" Visibility="Hidden">
+            Zapisz plik</Button>
+        <StackPanel Grid.Row="1">
+            <TextBlock HorizontalAlignment="Center" Margin="0,5,0,0">Wybierz typ sumy kontrolnej</TextBlock>
+            <ComboBox x:Name="checksumComboBox" Width="200" Margin="0,5,0,0"
+                      SelectedIndex="{Binding ChecksumType, Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="1" Grid.Column="1">
+            <TextBlock HorizontalAlignment="Center" Margin="0,5,0,0">Wybierz modulo/rozmiar CRC</TextBlock>
+            <TextBox Width="50" Margin="0,5,0,0" Text="{Binding ModuloCRCSize, Mode=TwoWay}"/>
+        </StackPanel>
+        <StackPanel Grid.Row="2">
+            <CheckBox x:Name="errorsCheckBox" Margin="5" Checked="CheckBox_Checked" IsChecked="{Binding AddErrors, Mode=TwoWay}">
+                Dodaj zaburzenia</CheckBox>
+            <CheckBox x:Name="withoutRepeatsCheckBox" Margin="5" Visibility="Hidden" IsChecked="{Binding WithoutRepeats, Mode=TwoWay}">
+                Bez powtórzeń</CheckBox>
+        </StackPanel>
+        <Button x:Name="startButton" Grid.Row="3" Grid.ColumnSpan="2" Visibility="Hidden" Click="startButton_Click" Command="{Binding StartCommand}">
+            START</Button>
     </Grid>
 </Window>

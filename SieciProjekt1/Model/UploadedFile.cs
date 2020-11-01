@@ -10,6 +10,8 @@ namespace SieciProjekt1.Model
 
         List<Packet> packets;
 
+        public byte[] Checksum { get; set; }
+
         public List<Packet> Packets => packets;
 
         public void DivideDataIntoPackets(int packetSize)
@@ -37,6 +39,24 @@ namespace SieciProjekt1.Model
 
                 packets.Add(packet);
             }
+        }
+
+        public void AddErrors(bool withoutRepeats)
+        {
+            if (withoutRepeats)
+                GenerateErrors.WithoutRepeats(this);
+            else
+                GenerateErrors.WithRepeats(this);
+        }
+
+        public void CalculateChecksum(ChecksumTypes checksumType, int modulusCRCSize)
+        {
+            if (checksumType == ChecksumTypes.ParityBit)
+                Checksum = ChecksumCalculator.ParityBit(Data);
+            else if (checksumType == ChecksumTypes.Modulo)
+                Checksum = ChecksumCalculator.Modulo(Data, modulusCRCSize);
+            else
+                Checksum = ChecksumCalculator.CRC(Data, modulusCRCSize);
         }
     }
 }

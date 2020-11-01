@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using SieciProjekt1.Model;
 using SieciProjekt1.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,29 @@ namespace SieciProjekt1.View
         public StartWindow()
         {
             InitializeComponent();
+
+            generateCombo();
+        }
+
+        private void generateCombo()
+        {
+            foreach (var item in Enum.GetValues(typeof(ChecksumTypes)))
+                checksumComboBox.Items.Add(item);
+        }
+
+        private void CheckBox_Checked(object sender, RoutedEventArgs e)
+        {
+            withoutRepeatsCheckBox.Visibility = Visibility.Visible;
+        }
+
+        private void loadFileButton_Click(object sender, RoutedEventArgs e)
+        {
+            startButton.Visibility = Visibility.Visible;
+        }
+
+        private void startButton_Click(object sender, RoutedEventArgs e)
+        {
+            saveFileButton.Visibility = Visibility.Visible;
         }
     }
 }
