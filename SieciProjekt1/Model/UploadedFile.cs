@@ -10,7 +10,7 @@ namespace SieciProjekt1.Model
 
         List<Packet> packets;
 
-        public byte[] Checksum { get; set; }
+        public byte[] ChecksumCRC { get; set; }
 
         public List<Packet> Packets => packets;
 
@@ -49,14 +49,14 @@ namespace SieciProjekt1.Model
                 GenerateErrors.WithRepeats(this);
         }
 
-        public void CalculateChecksum(ChecksumTypes checksumType, int modulusCRCSize)
+        public void CalculateChecksum(ChecksumTypes checksumType, int modulusCRCDivisor)
         {
             if (checksumType == ChecksumTypes.ParityBit)
-                Checksum = ChecksumCalculator.ParityBit(Data);
+                ChecksumCRC = ChecksumCalculator.ParityBit(Data);
             else if (checksumType == ChecksumTypes.Modulo)
-                Checksum = ChecksumCalculator.Modulo(Data, modulusCRCSize);
+                ChecksumCRC = ChecksumCalculator.Modulo(Data, modulusCRCDivisor);
             else
-                Checksum = ChecksumCalculator.CRC(Data, modulusCRCSize);
+                ChecksumCRC = ChecksumCalculator.CRC(Data, modulusCRCDivisor);
         }
     }
 }

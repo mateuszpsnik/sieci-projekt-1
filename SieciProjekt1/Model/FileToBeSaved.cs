@@ -7,10 +7,10 @@ namespace SieciProjekt1.Model
 {
     public class FileToBeSaved
     {
-        public FileToBeSaved(List<Packet> packets, byte[] checksum)
+        public FileToBeSaved(List<Packet> packets, byte[] checksumCRC)
         {
             this.packets = packets;
-            Checksum = checksum;
+            ChecksumCRC = checksumCRC;
             FinalFile = new byte[0];
         }
 
@@ -18,12 +18,12 @@ namespace SieciProjekt1.Model
 
         public byte[] FinalFile;
 
-        public byte[] Checksum;
+        public byte[] ChecksumCRC;
 
         public void ConcatenatePackets(long fileSize)
         {
             byte[] concatenatedPackets  = new byte[fileSize];
-            FinalFile = new byte[fileSize + Checksum.Length];
+            FinalFile = new byte[fileSize + ChecksumCRC.Length];
 
             int i = 0;
 
@@ -37,7 +37,7 @@ namespace SieciProjekt1.Model
             }
 
             concatenatedPackets.CopyTo(FinalFile, 0);
-            Checksum.CopyTo(FinalFile, concatenatedPackets.Length);
+            ChecksumCRC.CopyTo(FinalFile, concatenatedPackets.Length);
         }
     }
 }

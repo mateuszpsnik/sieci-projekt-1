@@ -41,14 +41,14 @@ namespace SieciProjekt1.ViewModel
             }
         }
 
-        int modulusCRCSize;
-        public int ModulusCRCSize
+        int modulusCRCDivisor;
+        public int ModulusCRCDivisor
         {
-            get => modulusCRCSize;
+            get => modulusCRCDivisor;
             set
             {
-                modulusCRCSize = value;
-                OnPropertyChanged(nameof(ModulusCRCSize));
+                modulusCRCDivisor = value;
+                OnPropertyChanged(nameof(ModulusCRCDivisor));
             }
         }
 
@@ -100,7 +100,7 @@ namespace SieciProjekt1.ViewModel
             if (addErrors)
                 uploadedFile.AddErrors(withoutRepeats);
             // checksum
-            uploadedFile.CalculateChecksum(checksumType, modulusCRCSize);
+            uploadedFile.CalculateChecksum(checksumType, modulusCRCDivisor);
             // packets
             uploadedFile.DivideDataIntoPackets(10); // it will be able to change packetSize later
         }
@@ -122,7 +122,7 @@ namespace SieciProjekt1.ViewModel
 
         public FileToBeSaved SendFileToSave()
         {
-            FileToBeSaved fileToBeSaved = new FileToBeSaved(uploadedFile.Packets, uploadedFile.Checksum);
+            FileToBeSaved fileToBeSaved = new FileToBeSaved(uploadedFile.Packets, uploadedFile.ChecksumCRC);
 
             return fileToBeSaved;
         }
