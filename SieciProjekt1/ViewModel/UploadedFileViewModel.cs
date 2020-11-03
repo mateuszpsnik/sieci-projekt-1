@@ -108,7 +108,7 @@ namespace SieciProjekt1.ViewModel
             }
         }
 
-        double amountOfErrors;
+        double amountOfErrors = 1;
         public double AmountOfErrors
         {
             get => amountOfErrors;
@@ -181,6 +181,8 @@ namespace SieciProjekt1.ViewModel
             {
                 File.WriteAllBytes(dialog.FileName, fileToBeSaved.FinalFile);
             }
+
+            System.Windows.Application.Current.Shutdown();
         }
 
         public FileToBeSaved SendFileToSave()
