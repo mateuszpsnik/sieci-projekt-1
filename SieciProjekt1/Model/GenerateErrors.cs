@@ -39,7 +39,11 @@ namespace SieciProjekt1.Model
 
             for (int i = 0; i < numberOfErrors; i++)
             {
-                randomInt.Add(random.Next(), random.Next(data.Length));
+                int randomKey = random.Next();
+                if (randomInt.ContainsKey(randomKey))
+                    i--;
+                else
+                    randomInt.Add(randomKey, random.Next(data.Length));
             }
 
             Dictionary<int, int> randomIntSortedByKey = new Dictionary<int, int>();
