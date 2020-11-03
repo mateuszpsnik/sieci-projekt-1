@@ -42,14 +42,47 @@ namespace SieciProjekt1.ViewModel
             }
         }
 
-        int modulusCRCDivisor;
+        int modulusCRCDivisor = 3;
         public int ModulusCRCDivisor
         {
-            get => modulusCRCDivisor;
+            get
+            {
+                try
+                {
+                    if (modulusCRCDivisor < 3)
+                    {
+                        throw new LessThanThreeException("Wartość modulo/dzielnika CRC musi być równa " +
+                                "minimum 3");
+                    }  
+                    else
+                    {
+                        return modulusCRCDivisor;
+                    }
+                }
+                catch (LessThanThreeException e)
+                {
+                    MessageBox.Show(e.Message, "Za niska wartość", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return 0;
+                }
+            }
             set
             {
-                modulusCRCDivisor = value;
-                OnPropertyChanged(nameof(ModulusCRCDivisor));
+                try
+                {
+                    if (value < 3)
+                        throw new LessThanThreeException("Wartość modulo/dzielnika CRC musi być równa " +
+                            "minimum 3");
+                    else
+                    {
+                        modulusCRCDivisor = value;
+                        OnPropertyChanged(nameof(ModulusCRCDivisor));
+                    }
+                }
+                catch (LessThanThreeException e)
+                {
+                    MessageBox.Show(e.Message, "Za niska wartość", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                
             }
         }
 
@@ -84,9 +117,9 @@ namespace SieciProjekt1.ViewModel
                 try
                 {
                     if (value > 10)
-                        throw new TooMuchErrorsException("Amount of errors cannot exceed 10%");
+                        throw new TooMuchErrorsException("Ilość błędów nie może być większa niż 10%");
                     else if (value < 0)
-                        throw new NegativeAmountException("Amount of errors cannot be negative");
+                        throw new NegativeAmountException("Ilość błędów nie może być ujemna");
                     else
                     {
                         amountOfErrors = value;
@@ -95,11 +128,11 @@ namespace SieciProjekt1.ViewModel
                 }
                 catch (TooMuchErrorsException e)
                 {
-                    MessageBox.Show(e.Message, "Too much errors", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message, "Za dużo błędów", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
                 catch (NegativeAmountException e)
                 {
-                    MessageBox.Show(e.Message, "Negative value", MessageBoxButton.OK, MessageBoxImage.Error);
+                    MessageBox.Show(e.Message, "Wartość ujemna", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
         }

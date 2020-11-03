@@ -34,7 +34,7 @@
         </StackPanel>
         <StackPanel Grid.Row="1" Grid.Column="1">
             <TextBlock HorizontalAlignment="Center" Margin="0,5,0,0">Wybierz modulo/dzielnik CRC (postać dziesiętna)</TextBlock>
-            <TextBox Width="50" Margin="0,5,0,0" Text="{Binding ModulusCRCDivisor, Mode=TwoWay}"/>
+            <TextBox Width="50" Margin="0,5,0,0" Text="{Binding ModulusCRCDivisor, Mode=TwoWay}" />
         </StackPanel>
         <StackPanel Grid.Row="2">
             <CheckBox x:Name="errorsCheckBox" Margin="5" Checked="CheckBox_Checked" IsChecked="{Binding AddErrors, Mode=TwoWay}">
