@@ -41,12 +41,12 @@ namespace SieciProjekt1.Model
             }
         }
 
-        public void AddErrors(bool withoutRepeats)
+        public void AddErrors(bool withoutRepeats, double amountOfErrors)
         {
             if (withoutRepeats)
-                GenerateErrors.WithoutRepeats(this);
+                GenerateErrors.WithoutRepeats(this, amountOfErrors);
             else
-                GenerateErrors.WithRepeats(this);
+                GenerateErrors.WithRepeats(this, amountOfErrors);
         }
 
         public void CalculateChecksum(ChecksumTypes checksumType, int modulusCRCDivisor)

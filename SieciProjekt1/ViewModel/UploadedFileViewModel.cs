@@ -5,6 +5,7 @@ using System.ComponentModel.Design;
 using System.IO;
 using System.Reflection.Metadata;
 using System.Text;
+using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
 using Microsoft.Win32;
@@ -74,6 +75,35 @@ namespace SieciProjekt1.ViewModel
             }
         }
 
+        double amountOfErrors;
+        public double AmountOfErrors
+        {
+            get => amountOfErrors;
+            set
+            {
+                try
+                {
+                    if (value > 10)
+                        throw new TooMuchErrorsException("Amount of errors cannot exceed 10%");
+                    else if (value < 0)
+                        throw new NegativeAmountException("Amount of errors cannot be negative");
+                    else
+                    {
+                        amountOfErrors = value;
+                        OnPropertyChanged(nameof(AmountOfErrors));
+                    }
+                }
+                catch (TooMuchErrorsException e)
+                {
+                    MessageBox.Show(e.Message, "Too much errors", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+                catch (NegativeAmountException e)
+                {
+                    MessageBox.Show(e.Message, "Negative value", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
+            }
+        }
+
         public void OpenFile()
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -98,7 +128,7 @@ namespace SieciProjekt1.ViewModel
         {
             // errors
             if (addErrors)
-                uploadedFile.AddErrors(withoutRepeats);
+                uploadedFile.AddErrors(withoutRepeats, amountOfErrors * 0.01);
             // checksum
             uploadedFile.CalculateChecksum(checksumType, modulusCRCDivisor);
             // packets
