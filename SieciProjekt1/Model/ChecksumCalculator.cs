@@ -25,7 +25,18 @@ namespace SieciProjekt1.Model
 
         public static byte[] Modulo(byte[] block, int modulus)
         {
-            throw new Exception();
+            BitArray bitArray = new BitArray(block);
+
+            int result = Convert.ToInt32(bitArray[0]);
+
+            for (int i = 0; i < bitArray.Count; i++)
+            {
+                result = (result + Convert.ToInt32(bitArray[i])) % modulus;
+            }
+
+            byte[] bytes = BitConverter.GetBytes(result);
+
+            return bytes;
         }
 
         public static byte[] CRC(byte[] block, int divisor)
