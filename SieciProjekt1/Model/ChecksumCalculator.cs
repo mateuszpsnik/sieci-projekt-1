@@ -27,10 +27,19 @@ namespace SieciProjekt1.Model
         {
             int result = Convert.ToInt32(block[0]);
 
+            int counter = 0;
             for (int i = 0; i < block.Length; i++)
             {
-                result = (result + Convert.ToInt32(block[i])) % modulus;
+                result += Convert.ToInt32(block[i]);
+                counter++;
+                if (counter == 1000)
+                {
+                    result %= modulus;
+                    counter = 0;
+                }
             }
+
+            result %= modulus;
 
             byte[] bytes = BitConverter.GetBytes(result);
 
