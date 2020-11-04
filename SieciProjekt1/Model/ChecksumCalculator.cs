@@ -25,13 +25,11 @@ namespace SieciProjekt1.Model
 
         public static byte[] Modulo(byte[] block, int modulus)
         {
-            BitArray bitArray = new BitArray(block);
+            int result = Convert.ToInt32(block[0]);
 
-            int result = Convert.ToInt32(bitArray[0]);
-
-            for (int i = 0; i < bitArray.Count; i++)
+            for (int i = 0; i < block.Length; i++)
             {
-                result = (result + Convert.ToInt32(bitArray[i])) % modulus;
+                result = (result + Convert.ToInt32(block[i])) % modulus;
             }
 
             byte[] bytes = BitConverter.GetBytes(result);
