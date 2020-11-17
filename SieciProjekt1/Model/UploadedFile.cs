@@ -14,15 +14,15 @@ namespace SieciProjekt1.Model
 
         public List<Packet> Packets => packets;
 
-        public void DivideDataIntoPackets(int packetSize)
+        public void DivideDataIntoPackets(uint packetSize)
         {
             packets = new List<Packet>();
-            int elementsLeft;
-            int i = 0;
+            uint elementsLeft;
+            uint i = 0;
 
             while (i < Data.Length)
             {
-                elementsLeft = Data.Length - i;
+                elementsLeft = (uint)Data.Length - i;
 
                 Packet packet;
 
@@ -39,6 +39,13 @@ namespace SieciProjekt1.Model
 
                 packets.Add(packet);
             }
+        }
+
+        public PacketRefStruct SendPacket(Packet p)
+        {
+            PacketRefStruct packet = new PacketRefStruct(p);
+
+            return packet;
         }
 
         public void AddErrors(bool withoutRepeats, double amountOfErrors)

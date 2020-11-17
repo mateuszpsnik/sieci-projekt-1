@@ -10,7 +10,7 @@ namespace SieciProjekt1.Model
 
         public byte[] Bytes { get; set; }
 
-        public Packet(int size, int id)
+        public Packet(uint size, uint id)
         {
             Bytes = new byte[size];
             Header = new Header(id, size);

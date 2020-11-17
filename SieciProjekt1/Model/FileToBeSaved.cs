@@ -2,14 +2,15 @@
 using System.CodeDom;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 
 namespace SieciProjekt1.Model
 {
     public class FileToBeSaved
     {
-        public FileToBeSaved(List<Packet> packets, byte[] checksumCRC)
+        public FileToBeSaved(byte[] checksumCRC)
         {
-            this.packets = packets;
+            packets = new List<Packet>();
             ChecksumCRC = checksumCRC;
             FinalFile = new byte[0];
         }
@@ -20,7 +21,22 @@ namespace SieciProjekt1.Model
 
         public byte[] ChecksumCRC;
 
-        public void ConcatenatePackets(long fileSize)
+       public void ReceivePacket(PacketRefStruct packetReceived, StreamWriter sw) 
+        {
+            // Following line of code uses my copy constructor, because otherwise
+            // (I don't know why) Span is passed by reference, not copied.
+            PacketRefStruct packet = new PacketRefStruct(packetReceived);
+
+            // Logs addresses of header and data into a text file
+            sw.WriteLine(packet.PrintAddresses());
+
+            // Converts PacketRefStruct to Packet and then adds it to the list 
+            Packet newPacket = new Packet(packet.Header.Size, packet.Header.ID);
+            newPacket.Bytes = packet.Data.ToArray();
+            packets.Add(newPacket);
+        }
+
+        public void ConcatenatePackets(long fileSize, int dataSize)
         {
             byte[] concatenatedPackets  = new byte[fileSize];
             FinalFile = new byte[fileSize + ChecksumCRC.Length];
@@ -29,7 +45,7 @@ namespace SieciProjekt1.Model
 
             foreach (var packet in packets)
             {
-                for (int j = 0; j < packet.Header.Size; j++)
+                for (int j = 0; j < dataSize; j++)
                 {
                     concatenatedPackets[i] = packet.Bytes[j];
                     i++;

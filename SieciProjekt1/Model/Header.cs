@@ -6,13 +6,20 @@ namespace SieciProjekt1.Model
 {
     public struct Header
     {
-        public Header(int id, int size)
+        public Header(uint id, uint size)
         {
             ID = id;
             Size = size;
+            recountSize();
         }
 
-        public int ID;
-        public int Size;
+        // Adds size of this header
+        private void recountSize()
+        {
+            Size += (uint)System.Runtime.InteropServices.Marshal.SizeOf(this);
+        }
+
+        public uint ID;
+        public uint Size;
     }
 }

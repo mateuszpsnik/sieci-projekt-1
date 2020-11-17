@@ -170,9 +170,16 @@ namespace SieciProjekt1.ViewModel
 
         public void SaveFile()
         {
-            FileToBeSaved fileToBeSaved = SendFileToSave();
+            FileToBeSaved fileToBeSaved = new FileToBeSaved(uploadedFile.ChecksumCRC);
 
-            fileToBeSaved.ConcatenatePackets(FileSize);
+            using (StreamWriter sw = new StreamWriter("logs.txt"))
+            {
+                // Send a packet (PacketRefStruct) from uploadedFile to fileToBeSaved
+                foreach (var packet in uploadedFile.Packets)
+                    fileToBeSaved.ReceivePacket(uploadedFile.SendPacket(packet), sw);
+            }
+
+            fileToBeSaved.ConcatenatePackets(FileSize, 10); // it will be changed later
 
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.InitialDirectory = FilePath;
@@ -183,13 +190,6 @@ namespace SieciProjekt1.ViewModel
             }
 
             System.Windows.Application.Current.Shutdown();
-        }
-
-        public FileToBeSaved SendFileToSave()
-        {
-            FileToBeSaved fileToBeSaved = new FileToBeSaved(uploadedFile.Packets, uploadedFile.ChecksumCRC);
-
-            return fileToBeSaved;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
