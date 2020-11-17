@@ -176,10 +176,10 @@ namespace SieciProjekt1.ViewModel
             {
                 // Send a packet (PacketRefStruct) from uploadedFile to fileToBeSaved
                 foreach (var packet in uploadedFile.Packets)
-                    fileToBeSaved.ReceivePacket(uploadedFile.SendPacket(packet), sw);
+                    fileToBeSaved.ReceivePacket(uploadedFile.SendPacket(packet, sw));
             }
 
-            fileToBeSaved.ConcatenatePackets(FileSize, 10); // it will be changed later
+            fileToBeSaved.ConcatenatePackets(FileSize); 
 
             SaveFileDialog dialog = new SaveFileDialog();
             dialog.InitialDirectory = FilePath;

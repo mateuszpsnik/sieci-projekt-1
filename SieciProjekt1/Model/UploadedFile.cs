@@ -19,6 +19,7 @@ namespace SieciProjekt1.Model
             packets = new List<Packet>();
             uint elementsLeft;
             uint i = 0;
+            uint countPackets = 1;
 
             while (i < Data.Length)
             {
@@ -27,9 +28,15 @@ namespace SieciProjekt1.Model
                 Packet packet;
 
                 if (elementsLeft > packetSize)
-                    packet = new Packet(packetSize, i);  
+                {
+                    packet = new Packet(packetSize, countPackets);
+                    countPackets++;
+                }
                 else
-                    packet = new Packet(elementsLeft, i); 
+                {
+                    packet = new Packet(elementsLeft, countPackets);
+                    countPackets++;
+                }
 
                 for (int j = 0; j < packetSize && i < Data.Length; j++)
                 {
@@ -41,9 +48,12 @@ namespace SieciProjekt1.Model
             }
         }
 
-        public PacketRefStruct SendPacket(Packet p)
+        public PacketRefStruct SendPacket(Packet p, System.IO.StreamWriter sw)
         {
             PacketRefStruct packet = new PacketRefStruct(p);
+
+            // Logs addresses of header and data into a text file
+            sw.WriteLine(packet.PrintAddresses());
 
             return packet;
         }

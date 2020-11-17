@@ -6,21 +6,21 @@ namespace SieciProjekt1.Model
 {
     public ref struct PacketRefStruct
     {
-        Header header;
+        private Header header;
         public Span<byte> Data { get; set; }
 
         public Header Header => header;
 
         public PacketRefStruct(Packet packet)
         {
-            header = packet.Header;
+            this.header = packet.Header;
             Data = packet.Bytes;
            // constructSpan(packet.Bytes);
         }
 
         public PacketRefStruct(PacketRefStruct packet)
         {
-            header = packet.header;
+            this.header = packet.Header;
             Data = packet.Data;
           //  constructSpan(packet.Data);
         }
@@ -41,11 +41,17 @@ namespace SieciProjekt1.Model
 
         public unsafe string PrintAddresses()
         {
-            string addresses = "";
+            string addresses = $"Packet {Header.ID}:{Environment.NewLine}";
 
+            addresses += $"ID: {Header.IdAddress()}{Environment.NewLine}";
+            addresses += $"Size: {Header.SizeAddress()}{Environment.NewLine}";
 
+            fixed (byte* bptr = &Data[0])
+            {
+                addresses += $"Data: {new IntPtr(bptr)}{Environment.NewLine}";
+            }
 
-            return "";
+            return addresses;
         }
     }
 }

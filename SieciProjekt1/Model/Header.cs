@@ -21,5 +21,21 @@ namespace SieciProjekt1.Model
 
         public uint ID;
         public uint Size;
+
+        public unsafe IntPtr IdAddress()
+        {
+            fixed (uint* ptr = &ID)
+            {
+                return new IntPtr(ptr);
+            }
+        }
+
+        public unsafe IntPtr SizeAddress()
+        {
+            fixed (uint* ptr = &Size)
+            {
+                return new IntPtr(ptr);
+            }
+        }
     }
 }
