@@ -48,15 +48,83 @@ namespace SieciProjekt1.Model
             }
         }
 
+        public byte[] SendPacket(Packet p)
+        {
+            const int sizeOfUInt = 4;
+            int arrayLength = 2*sizeOfUInt + p.Bytes.Length;
+            byte[] array = new byte[arrayLength];
+
+            int i = 0;
+            
+            byte[] idBytes = new byte[sizeOfUInt];
+            byte[] sizeBytes = new byte[sizeOfUInt];
+
+            for (int j = 0; j < idBytes.Length; j++)
+            {
+                array[i] = idBytes[j];
+                i++;
+            }
+
+            for (int k = 0; k < sizeBytes.Length; k++)
+            {
+                array[i] = sizeBytes[k];
+                i++;
+            }
+
+            for (int m = 0; m < p.Bytes.Length; m++)
+            {
+                array[i] = p.Bytes[m];
+                i++;
+            }
+
+            return array;
+        }
+
+
+        // Previous versions:
+
+        /*
+        public Span<byte> SendPacket(Packet p)
+        {
+            int spanLenght = System.Runtime.InteropServices.Marshal.SizeOf(p);
+            Span<byte> spanPacket = stackalloc byte[spanLenght];
+
+            int i = 0;
+
+            byte[] idBytes = new byte[4];
+            byte[] sizeBytes = new byte[4];
+
+            for (int j = 0; j < idBytes.Length; j++)
+            {
+                spanPacket[i] = idBytes[j];
+                i++;
+            }
+
+            for (int k = 0; k < sizeBytes.Length; k++)
+            {
+                spanPacket[i] = sizeBytes[k];
+                i++;
+            }
+
+            for (int m = 0; m < p.Bytes.Length; m++)
+            {
+                spanPacket[i] = p.Bytes[m];
+                i++;
+            }
+
+            return spanPacket;
+        }
+         */
+
+        /* (this one was working)
         public PacketRefStruct SendPacket(Packet p, System.IO.StreamWriter sw)
         {
             PacketRefStruct packet = new PacketRefStruct(p);
 
-            // Logs addresses of header and data into a text file
-            sw.WriteLine(packet.PrintAddresses());
-
             return packet;
         }
+         */
+
 
         public void AddErrors(bool withoutRepeats, double amountOfErrors)
         {

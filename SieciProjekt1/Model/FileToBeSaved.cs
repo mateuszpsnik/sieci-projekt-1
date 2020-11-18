@@ -21,17 +21,37 @@ namespace SieciProjekt1.Model
 
         public byte[] ChecksumCRC;
 
-       public void ReceivePacket(PacketRefStruct packetReceived) 
+
+        public void ReceivePacket(byte[] packetBytes, StreamWriter sw)
         {
-            // Following line of code uses my copy constructor, because otherwise
-            // (I don't know why) Span is passed by reference, not copied.
-            PacketRefStruct packet = new PacketRefStruct(packetReceived);
+            PacketRefStruct packet = new PacketRefStruct(packetBytes);
+
+            // Logs addresses of header and data into a text file
+            sw.WriteLine(packet.PrintAddresses());
 
             // Converts PacketRefStruct to Packet and then adds it to the list 
             Packet newPacket = new Packet(packet.Header.Size, packet.Header.ID);
             newPacket.Bytes = packet.Data.ToArray();
             packets.Add(newPacket);
         }
+
+        // Previous version:
+        /*
+        public void ReceivePacket(PacketRefStruct packetReceived, StreamWriter sw) 
+        {
+            // Following line of code uses my copy constructor, because otherwise
+            // (I don't know why) Span is passed by reference, not copied.
+            PacketRefStruct packet = new PacketRefStruct(packetReceived);
+
+            // Logs addresses of header and data into a text file
+            sw.WriteLine(packet.PrintAddresses());
+
+            // Converts PacketRefStruct to Packet and then adds it to the list 
+            Packet newPacket = new Packet(packet.Header.Size, packet.Header.ID);
+            newPacket.Bytes = packet.Data.ToArray();
+            packets.Add(newPacket);
+        }
+        */
 
         public void ConcatenatePackets(long fileSize)
         {

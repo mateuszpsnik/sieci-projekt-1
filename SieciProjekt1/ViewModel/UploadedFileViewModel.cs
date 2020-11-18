@@ -185,9 +185,16 @@ namespace SieciProjekt1.ViewModel
 
             using (StreamWriter sw = new StreamWriter("logs.txt"))
             {
+                // Send a packet (bytes) from uploadedFile to fileToBeSaved
+                foreach (var packet in uploadedFile.Packets)
+                    fileToBeSaved.ReceivePacket(uploadedFile.SendPacket(packet), sw);
+
+                // Previous version:
+                /*
                 // Send a packet (PacketRefStruct) from uploadedFile to fileToBeSaved
                 foreach (var packet in uploadedFile.Packets)
-                    fileToBeSaved.ReceivePacket(uploadedFile.SendPacket(packet, sw));
+                    fileToBeSaved.ReceivePacket(uploadedFile.SendPacket(packet), sw);
+                 */
             }
 
             fileToBeSaved.ConcatenatePackets(FileSize); 
