@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:SieciProjekt1.View"
         xmlns:viewmodel="clr-namespace:SieciProjekt1.ViewModel"
         mc:Ignorable="d"
-        Title="StartWindow" Height="250" Width="600">
+        Title="StartWindow" Height="300" Width="600">
 
     <Window.Resources>
         <viewmodel:UploadedFileViewModel x:Key="uploadedFileViewModel" />
@@ -46,7 +46,11 @@
             <TextBlock HorizontalAlignment="Center" Margin="0,5,0,0">Ilość zaburzeń (w procentach) - do 10%</TextBlock>
             <TextBox Width="50" Margin="0,5,0,0" Text="{Binding AmountOfErrors, Mode=TwoWay}" />
         </StackPanel>
-        <Button x:Name="startButton" Grid.Row="3" Grid.ColumnSpan="2" Visibility="Hidden" Click="startButton_Click" Command="{Binding StartCommand}">
+        <StackPanel Grid.Row="3">
+            <TextBlock HorizontalAlignment="Center" Margin="0,5,0,0">Wpisz rozmiar danych w pakiecie</TextBlock>
+            <TextBox Width="50" Margin="0,5,0,0" Text="{Binding PacketSize, Mode=TwoWay}" />
+        </StackPanel>
+        <Button x:Name="startButton" Grid.Row="3" Grid.Column="1" Visibility="Hidden" Click="startButton_Click" Command="{Binding StartCommand}">
             START</Button>
     </Grid>
 </Window>

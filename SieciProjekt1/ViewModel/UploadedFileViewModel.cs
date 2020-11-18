@@ -137,6 +137,17 @@ namespace SieciProjekt1.ViewModel
             }
         }
 
+        int packetSize = 10;
+        public int PacketSize
+        {
+            get => packetSize;
+            set
+            {
+                packetSize = value;
+                OnPropertyChanged(nameof(PacketSize));
+            }
+        }
+
         public void OpenFile()
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -165,7 +176,7 @@ namespace SieciProjekt1.ViewModel
             // checksum
             uploadedFile.CalculateChecksum(checksumType, modulusCRCDivisor);
             // packets
-            uploadedFile.DivideDataIntoPackets(10); // it will be able to change packetSize later
+            uploadedFile.DivideDataIntoPackets((uint)packetSize); 
         }
 
         public void SaveFile()
