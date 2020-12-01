@@ -21,22 +21,6 @@ namespace SieciProjekt1.Model
 
         public byte[] ChecksumCRC;
 
-
-        public void ReceivePacket(byte[] packetBytes, StreamWriter sw)
-        {
-            PacketRefStruct packet = new PacketRefStruct(packetBytes);
-
-            // Logs addresses of header and data into a text file
-            sw.WriteLine(packet.PrintAddresses());
-
-            // Converts PacketRefStruct to Packet and then adds it to the list 
-            Packet newPacket = new Packet(packet.Header.Size, packet.Header.ID);
-            newPacket.Bytes = packet.Data.ToArray();
-            packets.Add(newPacket);
-        }
-
-        // Previous version:
-        /*
         public void ReceivePacket(PacketRefStruct packetReceived, StreamWriter sw) 
         {
             // Following line of code uses my copy constructor, because otherwise
@@ -51,7 +35,7 @@ namespace SieciProjekt1.Model
             newPacket.Bytes = packet.Data.ToArray();
             packets.Add(newPacket);
         }
-        */
+        
 
         public void ConcatenatePackets(long fileSize)
         {

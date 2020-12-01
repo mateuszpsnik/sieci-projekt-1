@@ -48,40 +48,12 @@ namespace SieciProjekt1.Model
             }
         }
 
-        public byte[] SendPacket(Packet p)
+        public PacketRefStruct SendPacket(Packet p)
         {
-            const int sizeOfUInt = 4;
-            int arrayLength = 2*sizeOfUInt + p.Bytes.Length;
-            byte[] array = new byte[arrayLength];
+            PacketRefStruct packet = new PacketRefStruct(p);
 
-            int i = 0;
-            
-            byte[] idBytes = new byte[sizeOfUInt];
-            byte[] sizeBytes = new byte[sizeOfUInt];
-
-            for (int j = 0; j < idBytes.Length; j++)
-            {
-                array[i] = idBytes[j];
-                i++;
-            }
-
-            for (int k = 0; k < sizeBytes.Length; k++)
-            {
-                array[i] = sizeBytes[k];
-                i++;
-            }
-
-            for (int m = 0; m < p.Bytes.Length; m++)
-            {
-                array[i] = p.Bytes[m];
-                i++;
-            }
-
-            return array;
+            return packet;
         }
-
-
-        // Previous versions:
 
         /*
         public Span<byte> SendPacket(Packet p)
@@ -115,16 +87,6 @@ namespace SieciProjekt1.Model
             return spanPacket;
         }
          */
-
-        /* (this one was working)
-        public PacketRefStruct SendPacket(Packet p, System.IO.StreamWriter sw)
-        {
-            PacketRefStruct packet = new PacketRefStruct(p);
-
-            return packet;
-        }
-         */
-
 
         public void AddErrors(bool withoutRepeats, double amountOfErrors)
         {
